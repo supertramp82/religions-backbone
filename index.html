@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link href='http://fonts.googleapis.com/css?family=Cantarell' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/default.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+          <div class="page-header">
+            <h2>Global Shifts in Religious Adherence</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <h6>November 11, 2013</h6>
+          <h4>New Data Released on Global Religions</h4>
+          <p>The data visualization below contains the latest update on global religious values from the <a href="http://www.correlatesofwar.org/COW2%20Data/Religion/Religion.htm" target="blank">World Religion Project (WRP)</a>.  The data contains observations for each country at five years intervals from 1945-2010.  Compilation of the data was a massive effort of compiling information from various sources including surveys, census-based data, and specific sources that focus on particular religious groups.</p>
+          <p>The data visualization allows you to see trends across the globe and also focus in on the data for particular country.  Use the buttons at the left to choose a religion to color the map and switch the year of observation by selecting a year at the bottom of the map.  Clicking on a country changes the bottom chart to show the information for that particular country across time.</p>
+          <p>The data used in the visualization can be found on the <a href="http://correlatesofwar.org" target="blank">Correlates of War</a> website.</p>
+        </div>
+      </div>
+      <div class="row" id="progressAnchor">
+        <div class="progress-container col-xs-8 col-md-offset-2 col-md-6 col-md-offset-3">
+          <p>Loading content...</p>
+          <div class="progress-bar progress-bar-info active">
+            <div class="loading-bar" style="width:100px;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div id="religBtnAnchor" style="opacity:0;" class="col-xs-3 col-sm-3 col-md-2 btn-group-vertical"></div>
+        <div id="mapAnchor" style="opacity:0;" class="col-xs-9 col-sm-9 col-md-10"></div>
+      </div>
+      <div class="row" style="opacity:0;" id="chart-header"></div>
+      <div id="chart-container" style="opacity:0;" class="row"></div>
+    </div>
+
+    <script id="chart-template" type="text/x-template">
+      <div class="row">
+        <div class="btn-group btn-group-justified" id="offset-btn-group">
+          <a id="expand" class="btn btn-default offset-group">Percentage</a>
+          <a id="silhouette" class="btn btn-default offset-group">Stream I</a>
+          <a id="wiggle" class="btn btn-default offset-group">Stream II</a>
+          <a id="zero" class="btn btn-default offset-group">Stacked</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-group" id="chart-legend"></div>
+        <div class="chart-group" id="chart-y-axis"></div>
+        <div class="chart-group" id="multi-chart"></div>
+      </div>
+    </script>
+
+    <script id="header-template" type="text/x-template">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <h3 class="visible-md visible-lg pull-right">{{stateName}} ({{yearMin}} - {{yearMax}})</h3>
+        <h4 class="visible-sm pull-right">{{stateName}} ({{yearMin}} - {{yearMax}})</h4>
+        <h5 class="visible-xs pull-right">{{stateName}} ({{yearMin}} - {{yearMax}})</h5>
+        <p class="warning-note pull-left">{{getNote fipsCode}}</p>
+      </div>
+    </script>
+
+    <script id="relig-btn-template" type="text/x-template">
+      <div class="btn-group">
+        <button type="button" value="chrstgenpct" class="relig-btn-drop btn btn-default">Christianity</button>
+        <button type="button" class="relig-btn-tog btn btn-default dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="relig-drop-itm" value="chrstprotpct">Protestant</a></li>
+          <li><a class="relig-drop-itm" value="chrstcatpct">Roman Catholic</a></li>
+          <li><a class="relig-drop-itm" value="chrstorthpct">Eastern Orthodox</a></li>
+          <li><a class="relig-drop-itm" value="chrstangpct">Anglican</a></li>
+          <li><a class="relig-drop-itm" value="chrstothrpct">Other Christian</a></li>
+        </ul>
+      </div>
+      <div class="btn-group">
+        <button type="button" value="judgenpct" class="relig-btn-drop btn btn-default">Judaism</button>
+        <button type="button" class="relig-btn-tog btn btn-default dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="relig-drop-itm" value="judorthpct">Orthodox</a></li>
+          <li><a class="relig-drop-itm" value="judconspct">Conservative</a></li>
+          <li><a class="relig-drop-itm" value="judrefpct">Reform</a></li>
+          <li><a class="relig-drop-itm" value="judothrpct">Other Judaism</a></li>
+        </ul>
+      </div>
+      <div class="btn-group">
+        <button type="button" value="islmgenpct" class="relig-btn-drop btn btn-default">Islam</button>
+        <button type="button" class="relig-btn-tog btn btn-default dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="relig-drop-itm" value="islmsunpct">Sunni</a></li>
+          <li><a class="relig-drop-itm" value="islmshipct">Shi’a</a></li>
+          <li><a class="relig-drop-itm" value="islmibdpct">Ibadhi</a></li>
+          <li><a class="relig-drop-itm" value="islmnatpct">Nation of Islam</a></li>
+          <li><a class="relig-drop-itm" value="islmalwpct">Alawite</a></li>
+          <li><a class="relig-drop-itm" value="islmahmpct">Ahmadiyya</a></li>
+          <li><a class="relig-drop-itm" value="islmothrpct">Other Islam</a></li>
+        </ul>
+      </div>
+      <div class="btn-group">
+        <button type="button" value="budgenpct" class="relig-btn-drop btn btn-default">Buddhism</button>
+        <button type="button" class="relig-btn-tog btn btn-default dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="relig-drop-itm" value="budmahpct">Mahayana</a></li>
+          <li><a class="relig-drop-itm" value="budthrpct">Theravada</a></li>
+          <li><a class="relig-drop-itm" value="budothrpct">Other Buddhism</a></li>
+        </ul>
+      </div>
+      <button type="button" value="zorogenpct" class="relig-btn btn btn-default">Zoroastrian</button>
+      <button type="button" value="hindgenpct" class="relig-btn btn btn-default">Hindu</button>
+      <button type="button" value="sikhgenpct" class="relig-btn btn btn-default">Sikh</button>
+      <button type="button" value="shntgenpct" class="relig-btn btn btn-default">Shinto</button>
+      <button type="button" value="bahgenpct" class="relig-btn btn btn-default">Baha’i</button>
+      <button type="button" value="taogenpct" class="relig-btn btn btn-default">Taoism</button>
+      <button type="button" value="confgenpct" class="relig-btn btn btn-default">Confucianism</button>
+      <button type="button" value="jaingenpct" class="relig-btn btn btn-default">Jain</button>
+      <button type="button" value="syncgenpct" class="relig-btn btn btn-default">Syncretic</button>
+      <button type="button" value="anmgenpct" class="relig-btn btn btn-default">Animist</button>
+      <button type="button" value="nonreligpct" class="relig-btn btn btn-default">Non-Religious</button>
+      <button type="button" value="othrgenpct" class="relig-btn btn btn-default">Other</button>
+    </script>
+
+    <script id="map-template" type="text/x-template">
+      <div class="row">
+        <div id="mapContainer"></div>
+      </div>
+      <div class="row">
+        <div class="btn-group btn-group-justified" id="year-btn-group">
+          <a id="year1945" class="btn btn-default year-group">1945</a>
+          <a id="year1950" class="btn btn-default year-group">1950</a>
+          <a id="year1955" class="btn btn-default year-group">1955</a>
+          <a id="year1960" class="btn btn-default year-group">1960</a>
+          <a id="year1965" class="btn btn-default year-group">1965</a>
+          <a id="year1970" class="btn btn-default year-group">1970</a>
+          <a id="year1975" class="btn btn-default year-group">1975</a>
+          <a id="year1980" class="btn btn-default year-group">1980</a>
+          <a id="year1985" class="btn btn-default year-group">1985</a>
+          <a id="year1990" class="btn btn-default year-group">1990</a>
+          <a id="year1995" class="btn btn-default year-group">1995</a>
+          <a id="year2000" class="btn btn-default year-group">2000</a>
+          <a id="year2005" class="btn btn-default year-group">2005</a>
+          <a id="year2010" class="btn btn-default year-group selected">2010</a>
+        </div>
+      </div>
+    </script>
+
+    <script id="map-legend-template" type="text/x-template">
+      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="338px" height="39.706px" viewBox="0 0 338 39.706" enable-background="new 0 0 338 39.706" xml:space="preserve">
+        <rect x="0" y="0" fill="#EFEFEF" width="338" height="39.463"/>
+        <rect x="6.446" y="12.143" stroke="#4D4D4D" stroke-miterlimit="10" width="25.31" height="14.991"/>
+        <rect x="120.643" y="12.318" fill="#FDD3B1" stroke="#4D4D4D" stroke-miterlimit="10" width="23.281" height="14.991"/>
+        <rect x="146.438" y="12.318" fill="#FBB885" stroke="#4D4D4D" stroke-miterlimit="10" width="23.281" height="14.991"/>
+        <rect x="172.234" y="12.318" fill="#F89E5D" stroke="#4D4D4D" stroke-miterlimit="10" width="23.281" height="14.991"/>
+        <rect x="198.03" y="12.318" fill="#EA8435" stroke="#4D4D4D" stroke-miterlimit="10" width="23.281" height="14.991"/>
+        <rect x="223.826" y="12.318" fill="#D56C2A" stroke="#4D4D4D" stroke-miterlimit="10" width="23.281" height="14.991"/>
+        <rect x="249.621" y="12.318" fill="#B05E32" stroke="#4D4D4D" stroke-miterlimit="10" width="23.281" height="14.991"/>
+        <rect x="275.417" y="12.318" fill="#955436" stroke="#4D4D4D" stroke-miterlimit="10" width="23.281" height="14.991"/>
+        <rect x="94.847" y="12.318" fill="#FEE6D3" stroke="#4D4D4D" stroke-miterlimit="10" width="23.281" height="14.991"/>
+        <rect x="69.051" y="12.318" fill="#FFF3EA" stroke="#4D4D4D" stroke-miterlimit="10" width="23.281" height="14.991"/>
+        <rect x="35.43" y="12.318" fill="#8B8682" stroke="#4D4D4D" stroke-miterlimit="10" width="25.31" height="14.991"/>
+        <rect x="301.213" y="12.318" fill="#703F29" stroke="#4D4D4D" stroke-miterlimit="10" width="23.281" height="14.991"/>
+        <text transform="matrix(1 0 0 1 315.3609 10.6988)" font-family="'Helvetica'" font-size="8.1323">100%</text>
+        <text transform="matrix(1 0 0 1 294.9439 10.6979)" font-family="'Helvetica'" font-size="8.1323">90%</text>
+        <text transform="matrix(1 0 0 1 269.3863 10.6979)" font-family="'Helvetica'" font-size="8.1323">80%</text>
+        <text transform="matrix(1 0 0 1 243.8922 10.6988)" font-family="'Helvetica'" font-size="8.1323">70%</text>
+        <text transform="matrix(1 0 0 1 218.0025 10.6979)" font-family="'Helvetica'" font-size="8.1323">60%</text>
+        <text transform="matrix(1 0 0 1 192.3746 10.6979)" font-family="'Helvetica'" font-size="8.1323">50%</text>
+        <text transform="matrix(1 0 0 1 166.3824 10.6988)" font-family="'Helvetica'" font-size="8.1323">40%</text>
+        <text transform="matrix(1 0 0 1 140.5616 10.6988)" font-family="'Helvetica'" font-size="8.1323">30%</text>
+        <text transform="matrix(1 0 0 1 114.794 10.6988)" font-family="'Helvetica'" font-size="8.1323">20%</text>
+        <text transform="matrix(1 0 0 1 88.9215 10.6988)" font-family="'Helvetica'" font-size="8.1323">10%</text>
+        <text transform="matrix(1 0 0 1 43.7779 10.419)" font-family="'Helvetica'" font-size="8.1323">0%</text>
+        <text transform="matrix(1 0 0 1 8.3018 21.5353)" opacity="0.8" fill="#FFFFFF" font-family="'MyriadPro-Regular'" font-size="6.0993">No Data</text>
+        <text transform="matrix(1 0 0 1 64.7857 10.3287)" font-family="'Helvetica'" font-size="8.1323">0%+</text>
+        <text transform="matrix(1 0 0 1 149.3394 36.2828)" font-family="'Helvetica'" font-size="7.1158">Percentage of Population</text>
+      </svg>
+    </script>
+    <script type="text/javascript" src="js/default.js"></script>
+  </body>
+</html>

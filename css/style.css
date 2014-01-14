@@ -1,0 +1,378 @@
+@charset "UTF-8";
+
+body {
+  padding: 0px 15px 100px 15px;
+  background: #000;
+  font-family: 'Cantarell', helvetica, sans-serif;
+  font-size: 12px;
+  color: #fff;
+}
+h1, h2, .h1, .h2 {
+  font-family: helvetica, sans-serif;
+}
+h3, h4, h5, h6, .h3, .h4, .h5, .h6, .rickshaw_legend, .rickshaw_graph .x_tick .title {
+  font-family: 'Cantarell', helvetica, sans-serif;
+}
+a {
+  color: #ea8435;
+}
+.socialmedia {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.infoBox {
+  font: 14px 'Cantarell', Helvetica, sans-serif;
+}
+.rickshaw_graph path {
+  opacity: .9;
+  stroke: #373126;
+  stroke-width: 0px;
+}
+.rickshaw_graph path:hover {
+  opacity: .7;
+}
+.year-group {
+  height: 33px;
+  padding: 6px 3px;
+  font-size: 12px;
+}
+.year-group.selected {
+  background: #6e675b;
+  color: #fff;
+}
+.offset-group.selected {
+  background: #6e675b;
+  color: #fff;
+}
+.progress-container {
+  margin-top: 100px;
+  width: 500px;
+}
+.loading-bar {
+  height: 30px;
+  background: #ea8435;
+}
+#chart-container {
+  background: #fff;
+  border-radius: 5px;
+  margin-left: 2px;
+  margin-top: 0px;
+}
+#multi-chart svg {
+  background: white;
+}
+#multi-chart {
+  margin: 15px 0px 15px 0px;
+}
+.warning-note {
+  padding-top: 8px;
+  color: red;
+}
+#chart-y-axis {
+  pointer-events: none;
+  height: 500px;
+  width: 50px;
+  margin: 15px 0px 15px 0px;
+}
+#chart-legend {
+  width: 204px;
+  padding: 0px;
+  margin: 12px 0px 0px 12px;
+  background: #6e675b;
+  border: 2px solid #cccccc;
+  border-radius: 5px;
+  font-size: 11px;
+}
+.rickshaw_legend .line {
+    line-height: 170%;
+}
+.rickshaw_legend .action {
+  opacity: .7;
+}
+.rickshaw_legend a {
+  color: white;
+}
+.rickshaw_graph .x_tick .title {
+  opacity: 1;
+  color: #8b8682;
+}
+.dropdown-menu > li > a {
+  cursor: pointer;
+}
+#mapContainer {
+  border:2px solid #b7b3ad;
+  height: 400px; 
+}
+.chart-group {
+  float: left;
+}
+.infoBox {
+  padding: 6px 8px;
+  color: darkgray;
+  background: #6e675b;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+}
+.infoBox h5 {
+    margin: 0 0 5px;
+    color: #fff;
+}
+#map-legend {
+  float: right;
+  margin-top: 5px;
+}
+
+@media (max-width: 991px) {
+  #chart-container {
+    margin-left: -15px;
+  }
+}
+
+.relig-btn, .relig-btn-drop, .relig-btn-tog {
+  height: 28px !important;
+}
+
+@media (max-width: 768px) {
+  .year-group {
+    padding: 0px 0px;
+    font-size: 10px;
+  }
+  #religBtnAnchor {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .relig-btn-drop {
+      width: 94px;
+  }
+  .relig-btn {
+    width: 122px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .year-group {
+    font-size: 11px;
+  }
+  #religBtnAnchor {
+    padding-left: 0px;
+  }
+  .relig-btn-drop {
+    width: 134px;
+  }
+  .relig-btn {
+    width: 162px !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .warning-note {
+    padding-top: 28px;
+  }
+  #religBtnAnchor {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .relig-btn-drop {
+    width: 102px;
+  }
+  .relig-btn {
+    width: 130px !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  #religBtnAnchor {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .relig-btn-drop {
+    width: 136px;
+  }
+  .relig-btn {
+    width: 164px !important;
+  }
+}
+
+.chrstprot {
+  fill: #724f15;
+}
+.chrstcat {
+  fill: #aa761f;
+}
+.chrstorth {
+  fill: #e39d2a;  
+}
+.chrstang {
+  fill: #e9b154;
+}
+.chrstothr {
+  fill: #f4d8aa;
+}
+.swatch.chrstprot {
+  background: #724f15;
+}
+.swatch.chrstcat {
+  background: #aa761f;
+}
+.swatch.chrstorth {
+  background: #e39d2a;  
+}
+.swatch.chrstang {
+  background: #e9b154;
+}
+.swatch.chrstothr {
+  background: #f4d8aa;
+}
+
+.islmsun {
+  fill: #582f19;
+}
+.islmshi {
+  fill: #844726;
+}
+.islmibd {
+  fill: #b05e32;  
+}
+.islmothr {
+  fill: #c07e5b;
+}
+.islmalw {
+  fill: #d09e84;
+}
+.islmahm {
+  fill: #dfbfad;
+}
+.islmnat {
+  fill: #efdfd6;
+}
+.swatch.islmsun {
+  background: #582f19;
+}
+.swatch.islmshi {
+  background: #844726;
+}
+.swatch.islmibd {
+  background: #b05e32;  
+}
+.swatch.islmothr {
+  background: #c07e5b;
+}
+.swatch.islmalw {
+  background: #d09e84;
+}
+.swatch.islmahm {
+  background: #dfbfad;
+}
+.swatch.islmnat {
+  background: #efdfd6;
+}
+.budmah {
+  fill: #5f3d7e;
+}
+.budthr {
+  fill: #bf7afd;
+}
+.budothr {
+  fill: #e5cafe;
+}
+.swatch.budmah {
+  background: #5f3d7e;
+}
+.swatch.budthr {
+  background: #bf7afd;
+}
+.swatch.budothr {
+  background: #e5cafe;
+}
+.judorth {
+  fill: #2ae373;
+}
+.judcons {
+  fill: #7feeab;
+}
+.judref {
+  fill: #d4f9e3;
+}
+.swatch.judorth {
+  background: #2ae373;
+}
+.swatch.judcons {
+  background: #7feeab;
+}
+.swatch.judref {
+  background: #d4f9e3;
+}
+.zorogen {
+  fill: #373126;
+}
+.hindgen {
+  fill: #4a698b;
+}
+.sikhgen {
+  fill: #b7b3ad;
+}
+.shntgen {
+  fill: #6e675b;
+}
+.bahgen {
+  fill: #546de9;
+}
+.taogen {
+  fill: #1f37aa;
+}
+.swatch.zorogen {
+  background: #373126;
+}
+.swatch.hindgen {
+  background: #4a698b;
+}
+.swatch.sikhgen {
+  background: #b7b3ad;
+}
+.swatch.shntgen {
+  background: #6e675b;
+}
+.swatch.bahgen {
+  background: #546de9;
+}
+.swatch.taogen {
+  background: #1f37aa;
+}
+.jaingen {
+  fill: #334a3c;
+}
+.confgen {
+  fill: #5b6e63;
+}
+.syncgen {
+  fill: #0a391d;  
+}
+.anmgen {
+  fill: #a2bad6;
+}
+.nonrelig {
+  fill: #cccccc;
+}
+.othrgen {
+  fill: #333333;
+}
+.swatch.jaingen {
+  background: #334a3c;
+}
+.swatch.confgen {
+  background: #5b6e63;
+}
+.swatch.syncgen {
+  background: #0a391d;  
+}
+.swatch.anmgen {
+  background: #a2bad6;
+}
+.swatch.nonrelig {
+  background: #cccccc;
+}
+.swatch.othrgen {
+  background: #333333;
+}
+
